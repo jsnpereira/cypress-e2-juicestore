@@ -28,16 +28,29 @@ jobs:
       - name: STEP 7 -  Run Cypress tests
         run: npx cypress run
 
-      - name: STEP 8 - Upload Screenshots
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-
-      - name: STEP 9 - Upload Videos
+      - name: STEP 8 - Upload cypress report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: adityak74/google-drive-upload-git-action@main
         with:
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
+          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
+          overwrite: "true"
+          name: cypress-reports
+
+      - name: STEP 9 - Upload Screenshots
+        if: failure()
+        uses: adityak74/google-drive-upload-git-action@main
+        with:
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
+          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
+          overwrite: "true"
+          name: cypress-screenshots
+
+      - name: STEP 10 - Upload Videos
+        if: always()
+        uses: adityak74/google-drive-upload-git-action@main
+        with:
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
+          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
+          overwrite: "true"
           name: cypress-videos
-          path: cypress/videos
