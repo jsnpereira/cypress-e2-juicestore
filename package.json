@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@faker-js/faker": "^10.4.0",
     "cypress": "^14.5.4",
     "mochawesome": "^7.1.4",
     "mochawesome-merge": "^5.1.1",
