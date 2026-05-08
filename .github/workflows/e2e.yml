@@ -60,8 +60,8 @@ jobs:
 
       - name: Debug Secret
         run: |
-        if [ -n "${{ secrets.GDRIVE_CREDENTIALS }}" ]; then
-        echo "SECRET EXISTS"
-        else
-        echo "SECRET EMPTY"
-        fi
+          if [ -n "${{ secrets.GDRIVE_CREDENTIALS }}" ]; then
+          echo "SECRET EXISTS"
+          else
+          echo "SECRET EMPTY"
+          fi
