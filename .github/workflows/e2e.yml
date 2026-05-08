@@ -35,18 +35,10 @@ jobs:
         if: always()
         run: zip -r cypress-reports.zip cypress/reports
 
-      - name: STEP 9 - Upload artifact GitHub
+      - name: STEP 9 - Upload to Google Drive
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-report
-          path: cypress-reports.zip
-
-      - name: STEP 10 - Upload report Google Drive
-        if: always()
-        uses: Jodebu/upload-to-drive@master
+        uses: mathisve/gdrive-upload-action@main
         with:
           credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
-          folder: ${{ secrets.GDRIVE_FOLDER_ID }}
-          target: cypress-reports.zip
-          name: cypress-reports.zip
+          filename: cypress-reports.zip
+          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
