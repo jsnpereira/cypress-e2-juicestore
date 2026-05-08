@@ -37,33 +37,3 @@ jobs:
           overwrite: "true"
           filename: cypress/reports
           name: cypress-reports
-
-      - name: STEP 9 - Upload Screenshots
-        if: failure()
-        continue-on-error: true
-        uses: adityak74/google-drive-upload-git-action@main
-        with:
-          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
-          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
-          overwrite: "true"
-          filename: cypress/screenshots
-          name: cypress-screenshots
-
-      - name: STEP 10 - Upload Videos
-        if: always()
-        uses: adityak74/google-drive-upload-git-action@main
-        with:
-          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
-          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
-          overwrite: "true"
-          filename: cypress/videos
-          name: cypress-videos
-
-      - name: Debug Secret
-        if: always()
-        run: |
-          if [ -n "${{ secrets.GDRIVE_CREDENTIALS }}" ]; then
-          echo "SECRET EXISTS"
-          else
-          echo "SECRET EMPTY"
-          fi
