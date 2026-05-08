@@ -57,3 +57,11 @@ jobs:
           overwrite: "true"
           filename: cypress/videos
           name: cypress-videos
+
+      - name: Debug Secret
+        run: |
+        if [ -n "${{ secrets.GDRIVE_CREDENTIALS }}" ]; then
+        echo "SECRET EXISTS"
+        else
+        echo "SECRET EMPTY"
+        fi
