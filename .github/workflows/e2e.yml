@@ -32,6 +32,11 @@ jobs:
         if: always()
         run: zip -r cypress-reports.zip cypress/reports
 
+      - name: Debug Service Account
+        if: always()
+        run: |
+        echo "${{ secrets.GDRIVE_CREDENTIALS }}" | base64 -d | grep client_email
+
       - name: STEP 9 - Upload cypress report
         if: always()
         uses: adityak74/google-drive-upload-git-action@main
