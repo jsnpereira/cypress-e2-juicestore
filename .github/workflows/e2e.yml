@@ -1,48 +1,51 @@
 name: Cypress E2E tests
+
 on:
   workflow_dispatch:
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+
     steps:
-      - name: STEP 1 - checkout project
+      - name: STEP 1 - Checkout project
         uses: actions/checkout@v4
 
-      - name: STEP 2 - setup node
+      - name: STEP 2 - Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: STEP 3 - install dependencies
+      - name: STEP 3 - Install dependencies
         run: npm install
 
-      - name: STEP 4 - Install Juice shop
+      - name: STEP 4 - Install Juice Shop
         run: docker pull bkimminich/juice-shop:latest
 
-      - name: STEP 5 - Start Juice shop
+      - name: STEP 5 - Start Juice Shop
         run: docker run -d -p 3000:3000 bkimminich/juice-shop:latest
 
-      - name: STEP 6 - Wwait for juice shop to be ready
+      - name: STEP 6 - Wait for Juice Shop
         run: npx wait-on http://localhost:3000
 
-      - name: STEP 7 -  Run Cypress tests
+      - name: STEP 7 - Run Cypress tests
         run: npx cypress run
 
-      - name: STEP 8 - Zip cypress report
+      - name: STEP 8 - Zip Cypress report
         if: always()
         run: zip -r cypress-reports.zip cypress/reports
 
-      - name: Debug Service Account
+      - name: STEP 9 - Upload artifact GitHub
         if: always()
-        run: |
-          echo "${{ secrets.GDRIVE_CREDENTIALS }}" | base64 -d | grep client_email
-
-      - name: STEP 9 - Upload cypress report
-        if: always()
-        uses: adityak74/google-drive-upload-git-action@main
+        uses: actions/upload-artifact@v4
         with:
-          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
-          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
-          overwrite: "true"
-          filename: cypress-reports.zip
-          name: cypress-reports.zip
+          name: cypress-report
+          path: cypress-reports.zip
+
+      - name: STEP 10 - Upload report Google Drive
+        if: always()
+        uses: Jodebu/upload-to-drive@master
+        with:
+          target: cypress-reports.zip
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
+          parent_folder_id: ${{ secrets.GDRIVE_FOLDER_ID }}
