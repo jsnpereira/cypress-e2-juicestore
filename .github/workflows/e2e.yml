@@ -35,7 +35,7 @@ jobs:
       - name: Debug Service Account
         if: always()
         run: |
-        echo "${{ secrets.GDRIVE_CREDENTIALS }}" | base64 -d | grep client_email
+          echo "${{ secrets.GDRIVE_CREDENTIALS }}" | base64 -d | grep client_email
 
       - name: STEP 9 - Upload cypress report
         if: always()
