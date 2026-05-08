@@ -46,6 +46,7 @@ jobs:
         if: always()
         uses: Jodebu/upload-to-drive@master
         with:
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
+          folder: ${{ secrets.GDRIVE_FOLDER_ID }}
           target: cypress-reports.zip
-          credentials: ${{ secrets.GDRIVE_CREDENTIALS_JSON }}
-          parent_folder_id: ${{ secrets.GDRIVE_FOLDER_ID }}
+          name: cypress-reports.zip
