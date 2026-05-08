@@ -35,6 +35,7 @@ jobs:
           credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
           folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
           overwrite: "true"
+          filename: cypress/reports
           name: cypress-reports
 
       - name: STEP 9 - Upload Screenshots
@@ -44,6 +45,7 @@ jobs:
           credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
           folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
           overwrite: "true"
+          filename: cypress/screenshots
           name: cypress-screenshots
 
       - name: STEP 10 - Upload Videos
@@ -53,4 +55,5 @@ jobs:
           credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
           folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
           overwrite: "true"
+          filename: cypress/videos
           name: cypress-videos
