@@ -40,6 +40,7 @@ jobs:
 
       - name: STEP 9 - Upload Screenshots
         if: failure()
+        continue-on-error: true
         uses: adityak74/google-drive-upload-git-action@main
         with:
           credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
@@ -59,6 +60,7 @@ jobs:
           name: cypress-videos
 
       - name: Debug Secret
+        if: always()
         run: |
           if [ -n "${{ secrets.GDRIVE_CREDENTIALS }}" ]; then
           echo "SECRET EXISTS"
