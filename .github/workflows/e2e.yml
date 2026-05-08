@@ -30,7 +30,7 @@ jobs:
 
       - name: STEP 8 - Zip cypress report
         if: always()
-        run: zip - r cypress-reports.zip cypress/reports
+        run: zip -r cypress-reports.zip cypress/reports
 
       - name: STEP 9 - Upload cypress report
         if: always()
