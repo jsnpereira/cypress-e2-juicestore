@@ -31,14 +31,9 @@ jobs:
       - name: STEP 7 - Run Cypress tests
         run: npx cypress run
 
-      - name: STEP 8 - Zip Cypress report
-        if: always()
-        run: zip -r cypress-reports.zip cypress/reports
-
-      - name: STEP 9 - Upload to Google Drive
-        if: always()
-        uses: Jodebu/upload-to-drive@master
+      - name: STEP 8 - Upload cypress report
+        uses: actions/upload-artifact@v4
         with:
-          target: cypress-reports.zip
-          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
-          folder: ${{ secrets.GDRIVE_FOLDER_ID }}
+          name: cypress-report-${{ github.run_number }}
+          path: cypress/reports
+          retention-days: 7
