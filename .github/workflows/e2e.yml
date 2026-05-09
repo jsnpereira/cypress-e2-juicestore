@@ -37,8 +37,9 @@ jobs:
 
       - name: STEP 9 - Upload to Google Drive
         if: always()
-        uses: mathisve/gdrive-upload-action@main
+        uses: logickoder/google-drive-upload@test
         with:
           credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
-          filename: cypress-reports.zip
-          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
+          filename: "cypress-reports.zip"
+          folderID: ${{ secrets.GDRIVE_FOLDER_ID }}
+          overwrite: "true"
