@@ -4,3 +4,4 @@ package-lock.json
 cypress/fixtures/*.json
 cypress/reports/*
 allure-results/*
+.idea/
