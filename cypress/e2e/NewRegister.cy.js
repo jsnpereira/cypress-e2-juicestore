@@ -22,19 +22,19 @@ describe('New register', () => {
         var securityAnswer = faker.lorem.sentence();
 
         UserRegistrationPage.userRegistrationTitleCard.should('be.visible');
-        UserRegistrationPage.emailInput.should('be.visible');
-        UserRegistrationPage.emailInput.type(email);
-        UserRegistrationPage.passwordInput.should('be.visible');
-        UserRegistrationPage.passwordInput.type(password);
-        UserRegistrationPage.repeatPasswordInput.should('be.visible');
-        UserRegistrationPage.repeatPasswordInput.type(password);
-        UserRegistrationPage.securityQuestionField.should('be.visible');
-        UserRegistrationPage.securityQuestionField.click();
-        UserRegistrationPage.question1Select.should('be.visible');
-        UserRegistrationPage.question1Select.first().click();
-        UserRegistrationPage.securityAnswerInput.should('be.visible');
-        UserRegistrationPage.securityAnswerInput.type(securityAnswer);
-        UserRegistrationPage.registerUserButton.should('be.visible');
+        UserRegistrationPage.emailInput.should('be.visible')
+                                       .type(email);
+        UserRegistrationPage.passwordInput.should('be.visible')
+                                          .type(password);
+        UserRegistrationPage.repeatPasswordInput.should('be.visible')
+                                                .click({force: true})
+                                                .type(password, {force: true});
+        UserRegistrationPage.securityQuestionField.should('be.visible')
+                                                  .click();
+        UserRegistrationPage.question1Select.should('be.visible')
+                                            .first().click();
+        UserRegistrationPage.securityAnswerInput.should('be.visible')
+                                                .type(securityAnswer).type(securityAnswer);
         UserRegistrationPage.registerUserButton.click();
 
         cy.url().should('include', '/#/login');

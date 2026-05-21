@@ -23,10 +23,11 @@ jobs:
         run: npm install
 
       - name: STEP 4 - Install Juice Shop
-        run: docker pull bkimminich/juice-shop:latest
+        run: docker pull bkimminich/juice-shop:v20.0.0
 
       - name: STEP 5 - Start Juice Shop
-        run: docker run -d -p 3000:3000 bkimminich/juice-shop:latest
+
+        run: docker run -d -p 3000:3000 bkimminich/juice-shop:v20.0.0
 
       - name: STEP 6 - Wait for Juice Shop
         run: npx wait-on http://localhost:3000
