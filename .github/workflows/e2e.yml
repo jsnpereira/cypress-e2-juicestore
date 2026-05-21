@@ -28,12 +28,23 @@ jobs:
       - name: STEP 6 - Wait for Juice Shop
         run: npx wait-on http://localhost:3000
 
-      - name: STEP 7 - Run Cypress tests
-        run: npx cypress run
+      - name: STEP 7 - Instalar Allure CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-jre
+          npm install -g allure-commandline --save-dev
 
-      - name: STEP 8 - Upload cypress report
+      - name: STEP 8 - Run Cypress tests
+        run: npm run cy:run
+
+      - name: STEP 9 - Gerar relatório Allure
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-report-${{ github.run_number }}
-          path: cypress/reports
-          retention-days: 7
+          name: allure-report
+          path: allure-report
+
+      - name: STEP 10 - Deploy Github Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report

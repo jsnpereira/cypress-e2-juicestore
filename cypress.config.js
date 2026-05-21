@@ -1,17 +1,17 @@
 const {defineConfig} = require('cypress')
-const { report } = require('node:process')
+const { allureCypress } = require('allure-cypress/reporter');
+
 
 module.exports = defineConfig({
-    reporter: 'mochawesome',
-    reporterOptions:{
-        reportDir: 'cypress/reports',
-        overwrite: false,
-        html: true,
-        json: true
-    },
     e2e: {
         baseUrl: 'http://localhost:3000',
         viewportWidth: 1280,
-        viewportHeight: 720
+        viewportHeight: 720,
+        setupNodeEvents(on, config) {
+             allureCypress(on, config, {
+                    resultsDir: "allure-results",
+            });
+        return config;
+        }
     }
 })
