@@ -52,8 +52,16 @@ jobs:
           mkdir -p allure-results/history
 
           if [ -d "gh-pages/history" ]; then
-          cp -r gh-pages/history/* allure-results/history
+            cp -r gh-pages/history/* allure-results/history || true
           fi
+
+      - name: DEBUG history
+        run: |
+          echo "=== gh-pages/history ==="
+          ls -la gh-pages/history || true
+
+          echo "=== allure-results/history ==="
+          ls -la allure-results/history || true
 
       - name: STEP 10 - Run Cypress tests
         if: always()
@@ -66,7 +74,11 @@ jobs:
       - name: STEP 12 - Save the allure history
         if: always()
         run: |
-          cp -r allure-report/history allure-history
+          mkdir -p allure-report/history
+
+           if [ -d "allure-results/history" ]; then
+              cp -r allure-results/history/* allure-report/history || true
+           fi
 
       - name: STEP 13 - Deploy the report in the Github Pages
         uses: peaceiris/actions-gh-pages@v4
