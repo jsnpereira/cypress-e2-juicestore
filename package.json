@@ -19,7 +19,7 @@
     "test:execution" : "npm run delete:history && npm run allure:copy && npm run allure:clear && npm run allure:executor && npm run cy:run && npm run allure:history && npm run allure:generate",
     "e2e:copy": "mkdir old-history && cp -r allure-results/history old-history/ || true",
     "e2e:executor": "node scripts/allure-e2e-executor.js",
-    "e2e:history":  "npm run delete:history && npm run copy:history",
+    "e2e:history":  "npm run delete:history && npm run e2e:copy",
     "e2e:configuration": "npm run allure:clear && npm run e2e:executor",
     "e2e:results": "npm run allure:history && npm run allure:generate"
   }
