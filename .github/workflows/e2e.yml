@@ -79,15 +79,6 @@ jobs:
         if: always()
         run: npm run e2e:results
 
-#      - name: STEP 12 - Save the allure history
-#        if: always()
-#        run: |
-#          mkdir -p allure-report/history
-#
-#           if [ -d "allure-results/history" ]; then
-#              cp -r allure-results/history/* allure-report/history || true
-#           fi
-
       - name: STEP 13 - Deploy the report in the Github Pages
         uses: peaceiris/actions-gh-pages@v4
         if: always()
@@ -95,28 +86,3 @@ jobs:
           github_token: ${{secrets.GITHUB_TOKEN}}
           publish_branch: gh-pages
           publish_dir: allure-report
-
-#      - name: STEP 13 - Send Allure report to Github Pages
-#        if: always()
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: allure-report
-#          path: allure-report
-
-#      - name: STEP 14 - Verify Allure files
-#        if: always()
-#        run: |
-#          echo "=== allure-results ==="
-#          ls -la allure-results || true
-#
-#          echo "=== allure-report ==="
-#          ls -la allure-report || true
-
-#      - name: STEP 15 - Deploy Github Pages
-#        if: always()
-#        uses: peaceiris/actions-gh-pages@v4
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          publish_dir: ./allure-report
-
-
