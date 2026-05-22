@@ -5,3 +5,5 @@ cypress/fixtures/*.json
 cypress/reports/*
 allure-results/*
 .idea/
+allure-report/*
+old-history/*
