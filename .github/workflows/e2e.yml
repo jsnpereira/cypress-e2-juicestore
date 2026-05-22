@@ -1,43 +1,88 @@
 name: Cypress E2E tests
+
 on:
   workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+
     steps:
-      - name: STEP 1 - checkout project
+      - name: Checkout project
         uses: actions/checkout@v4
 
-      - name: STEP 2 - setup node
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
-      - name: STEP 3 - install dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: STEP 4 - Install Juice shop
-        run: docker pull bkimminich/juice-shop:latest
+      - name: Install Juice Shop
+        run: docker pull bkimminich/juice-shop:v20.0.0
 
-      - name: STEP 5 - Start Juice shop
-        run: docker run -d -p 3000:3000 bkimminich/juice-shop:latest
+      - name: Start Juice Shop
+        run: docker run -d -p 3000:3000 bkimminich/juice-shop:v20.0.0
 
-      - name: STEP 6 - Wwait for juice shop to be ready
+      - name: Wait for Juice Shop
         run: npx wait-on http://localhost:3000
 
-      - name: STEP 7 -  Run Cypress tests
-        run: npx cypress run
+      - name: Instalar Allure CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-jre
+          npm install -g allure-commandline --save-dev
 
-      - name: STEP 8 - Upload Screenshots
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-
-      - name: STEP 9 - Upload Videos
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
         if: always()
-        uses: actions/upload-artifact@v4
+        continue-on-error: true
         with:
-          name: cypress-videos
-          path: cypress/videos
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Download the allure history from gh-pages
+        if: always()
+        run: |
+          mkdir -p allure-results/history
+
+          if [ -d "gh-pages/history" ]; then
+            cp -r gh-pages/history/* allure-results/history || true
+          fi
+
+      - name: Copy old history to folder
+        if: always()
+        run: npm run e2e:history
+
+      - name: DEBUG history
+        if: always()
+        run: |
+          echo "=== gh-pages/history ==="
+          ls -la gh-pages/history || true
+
+          echo "=== allure-results/history ==="
+          ls -la allure-results/history || true
+          
+      - name: allure configuration executor
+        if: always()
+        run: npm run e2e:configuration
+
+      - name: Run Cypress tests
+        if: always()
+        run: npm run cy:run
+
+      - name: Update the allure report
+        if: always()
+        run: npm run e2e:results
+
+      - name: STEP 13 - Deploy the report in the Github Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: always()
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_branch: gh-pages
+          publish_dir: allure-report
