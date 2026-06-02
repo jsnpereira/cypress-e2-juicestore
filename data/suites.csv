@@ -1,3 +1,6 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","2041","should display the login form","Login","2026-05-22","passed","2026-05-22","","","",""
-"","4914","should register a new user","New register","2026-05-22","passed","2026-05-22","","","",""
+"","2092","should display the login form","Login","2026-06-02","passed","2026-06-02","","","",""
+"","2963","Should add one product to the cart and check notification cart","Shopping Cart","2026-06-02","passed","2026-06-02","","","",""
+"","2775","Check the total price of the products in the cart","Shopping Cart","2026-06-02","passed","2026-06-02","","","",""
+"","5126","should register a new user","New register","2026-06-02","passed","2026-06-02","","","",""
+"","2707","check the product in the cart","Shopping Cart","2026-06-02","passed","2026-06-02","","","",""
